@@ -1,0 +1,40 @@
+.dir {
+    background-color: aqua;
+    height: 500px;
+    position: absolute;
+    cursor: pointer;
+    border: solid 2px black;
+}
+
+.file-plate {
+    cursor: pointer;
+    width: 100px;
+}
+
+.download-file {
+    display: none;
+    position: absolute;
+    z-index: 30;
+    margin: 35px;
+}
+
+.file-plate:hover .download-file {
+    display: block;
+}
+
+.remove-file {
+    position: absolute;
+    margin-left: 70px;
+}
+
+.fa-download {
+    color: black;
+}
+
+.fa-remove {
+    color: black;
+}
+
+.file--active {
+    background-color:#e6e6e6;
+}

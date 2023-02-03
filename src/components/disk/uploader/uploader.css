@@ -1,0 +1,19 @@
+.message-container {
+    overflow: hidden;
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.message-body-container::-webkit-scrollbar {
+    width: 0;
+}
+
+.message-body-container{
+    overflow: auto;
+    height: 300px;
+}
+

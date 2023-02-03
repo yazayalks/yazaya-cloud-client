@@ -1,0 +1,17 @@
+:root {
+    --toastify-icon-color-success: #00d1b2;
+    --toastify-color-success: #00d1b2;
+    --toastify-color-error: #ff3860;
+}
+
+@media (prefers-color-scheme: dark) {
+    .logo path {
+        fill: white;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .logo path {
+        fill: black;
+    }
+}
