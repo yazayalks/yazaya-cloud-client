@@ -1,11 +1,11 @@
 import api from "../http";
 import {setAvatar, setSize, setUser} from "../redusers/sliceUserReducer";
-import {addFile, deleteFile, deleteFileAction, setFiles} from "../redusers/sliceFileReducer";
+import {addFile, deleteFileAction, setFiles} from "../redusers/sliceFileReducer";
 import axios from "axios";
 import {addUploadFile, changeUploadFile, showUploader} from "../redusers/sliceUploadReduser";
 import {hideLoader, showLoader} from "../redusers/sliceAppReducer";
 import {toast} from 'react-toastify'
-import {useSelector} from "react-redux";
+
 
 const url = process.env.REACT_APP_API_HOST
 export default class FileService{
@@ -80,7 +80,7 @@ export default class FileService{
 
      static downloadFile = async (file) => {
          try {
-             const fileBlob = axios.get(`${url}api/files/download?id=${file._id}`, {
+             axios.get(`${url}api/files/download?id=${file._id}`, {
                  headers: {
                      Authorization: `Bearer ${localStorage.getItem('token')}`,
                  },
@@ -110,7 +110,7 @@ export default class FileService{
     static deleteFile = (id, name) => {
         return async dispatch => {
             try {
-                const response = await api.delete(`api/files?id=${id}`)
+                await api.delete(`api/files?id=${id}`)
                 dispatch(deleteFileAction(id))
                 dispatch(this.getUsedSpace())
                 toast.success(name + " successfully deleted!")
@@ -166,7 +166,7 @@ export default class FileService{
         return async dispatch => {
             try {
 
-                const response = await api.delete(`api/files/avatar`)
+               await api.delete(`api/files/avatar`)
                 dispatch(setAvatar(null))
             } catch (e) {
                 console.log(e)
@@ -185,5 +185,4 @@ export default class FileService{
             }
         }
     }
-
 }

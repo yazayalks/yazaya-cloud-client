@@ -65,8 +65,10 @@ export default class AuthService{
                 const response = await axios.get(`${url}api/auth/refresh`, {withCredentials: true,})
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.accessToken)
+                console.log("ААВВТОРИЗОВАН")
             } catch (e) {
                 console.log(e)
+                console.log("НЕААВВТОРИЗОВАН")
             }
             finally {
                 dispatch(setLoading(false))
