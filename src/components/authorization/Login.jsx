@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Input from "../utils/Input";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../http";
 import AuthService from "../../services/AuthService";
 
@@ -9,9 +9,11 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const dispatch = useDispatch()
+    const serverMessage = useSelector(state => state.app.serverMessageLogin)
 
     async function handleFormSubmit(evt) {
         evt.preventDefault();
+
         dispatch(AuthService.login(email, password))
     }
 
@@ -31,7 +33,7 @@ const Login = () => {
                         <Input value={password} setValue={setPassword} type="password" placeholder="Enter password"/>
                     </div>
                 </div>
-
+                <p style={{color: 'red'}}>{serverMessage}</p>
                 <div className="field is-grouped is-grouped-right">
                     <div className="control">
                         <input type="submit" className="button is-primary" value="Login"/>

@@ -10,7 +10,7 @@ const Profile = () => {
     const currentUser = useSelector(state => state.user.currentUser)
     const avatar = currentUser.avatar ? `${process.env.REACT_APP_API_HOST + currentUser.avatar}` : avatarLogo
     const navigate = useNavigate();
-
+    console.log(currentUser)
     function changeHandler(e) {
         const file = e.target.files[0]
         dispatch(FileService.uploadAvatar(file))
@@ -36,6 +36,20 @@ const Profile = () => {
                     <div>
                         <img src={avatar} className="profile-avatar-image" alt=""/>
                     </div>
+
+                       <p>
+                           First name: {currentUser.firstName}
+                       </p>
+
+
+                        <p>
+                            Last name: {currentUser.lastName}
+                        </p>
+
+                        <p>
+                            Email: {currentUser.email}
+                        </p>
+
                     <div className="columns is-centered is-mobile mt-3">
                         <div className="column p-1">
                             <div className="button  ">

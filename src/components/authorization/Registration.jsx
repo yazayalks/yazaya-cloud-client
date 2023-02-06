@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Input from "../utils/Input";
 import AuthService from "../../services/AuthService";
 import {registration} from "../../http";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const Registration = () => {
     const [firstName, setFirstName] = useState("")
@@ -12,16 +12,21 @@ const Registration = () => {
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
     const dispatch = useDispatch()
+    const serverMessage = useSelector(state => state.app.serverMessageRegister)
 
 
 
     async function handleFormSubmit(evt) {
         evt.preventDefault();
+
         if (password !== passwordConfirm) {
             setError(true)
             return
         }
-        dispatch(AuthService.registration(email, password))
+        else {
+            setError(false)
+        }
+        dispatch(AuthService.registration(email, password, firstName, lastName))
     }
 
     return (
@@ -63,9 +68,11 @@ const Registration = () => {
                                placeholder="Enter password confirm"/>
                     </div>
                 </div>
-                {error&&<div>
+                {error&&
                     <p style={{color: 'red'}}>Passwords do not match</p>
-                </div>}
+
+               }
+                <p style={{color: 'red'}}>{serverMessage}</p>
                 <div className="field is-grouped is-grouped-right">
                     <div className="control">
                         <input type="submit" className="button is-primary" value="Register"/>

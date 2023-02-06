@@ -1,24 +1,32 @@
 import api from "../http";
 import {setLoading, setUser} from "../redusers/sliceUserReducer";
 import axios from "axios";
+import {setServerMessageLogin, setServerMessageRegister} from "../redusers/sliceAppReducer";
 
 const url = process.env.REACT_APP_API_HOST
 
 export default class AuthService{
 
-    static registration = (email, password) => {
+    static registration = (email, password, firstName, lastName) => {
         return async dispatch => {
             try {
                 const response = await api.post('api/auth/registration',
                     {
                         email,
-                        password
+                        password,
+                        firstName,
+                        lastName
                     })
+                if (response === undefined) {
+                    dispatch(setServerMessageRegister("The server is not working, contact the administrator to enable it and fix the error"));
+                    return
+                }
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.accessToken)
-                console.log(response)
+                dispatch(setServerMessageRegister(""));
             } catch (e) {
                 console.log(e)
+                dispatch(setServerMessageRegister(e.response.data.message));
             }
         }
     }
@@ -36,11 +44,16 @@ export default class AuthService{
                         email,
                         password
                     })
+                if (response === undefined) {
+                    dispatch(setServerMessageLogin("The server is not working, contact the administrator to enable it and fix the error"));
+                    return
+                }
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.accessToken)
-                console.log(response.data)
+                dispatch(setServerMessageLogin(""));
             } catch (e) {
                 console.log(e)
+                dispatch(setServerMessageLogin(e.response.data.message));
             }
         }
     }
