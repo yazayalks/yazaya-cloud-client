@@ -9,6 +9,7 @@ import styles from './navbar.css'
 
 const Navbar = () => {
     const isAuth = useSelector(state => state.user.isAuth)
+    const isActivated = useSelector(state => state.user.currentUser.isActivated)
     const currentUser = useSelector(state => state.user.currentUser)
     const menu = useSelector(state => state.app.showMenu)
     const avatar = currentUser.avatar ? `${process.env.REACT_APP_API_HOST + currentUser.avatar}` : avatarLogo
@@ -40,7 +41,7 @@ const Navbar = () => {
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                     </a>
-                    {isAuth &&
+                    {isAuth && isActivated &&
                         <NavLink to="/profile" className="avatar-logo">
 
                             <img src={avatar} className="avatar-image" alt=""/>
@@ -51,12 +52,12 @@ const Navbar = () => {
                 <div id="navbarBasicExample" className={menu ? 'navbar-menu is-active' : 'navbar-menu'}
                      onClick={() => dispatch(showMenu())}>
                     <div className="navbar-start">
-                        {!isAuth && <NavLink to="/login" className='navbar-item'>
+                        { !(isAuth && isActivated) && <NavLink to="/login" className='navbar-item'>
 
                             Login
 
                         </NavLink>}
-                        {!isAuth && <NavLink to="/registration" className='navbar-item'>
+                        {!(isAuth && isActivated) && <NavLink to="/registration" className='navbar-item'>
 
                             Register
 
@@ -65,14 +66,14 @@ const Navbar = () => {
 
 
                     <div className="navbar-end">
-                        {isAuth && <NavLink to="/" className="navbar-item"  onClick={() => dispatch(logout())}>
+                        {isAuth && isActivated && <NavLink to="/" className="navbar-item"  onClick={() => dispatch(logout())}>
 
 
                             Logout
 
 
                         </NavLink>}
-                        {isAuth &&
+                        {isAuth && isActivated &&
                             <NavLink to="/profile" className="avatar-logo--desktop">
 
                                 <img src={avatar} className="avatar-image" alt=""/>

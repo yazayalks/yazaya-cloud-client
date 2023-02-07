@@ -34,9 +34,11 @@ const sliceUserReducer = createSlice({
     initialState: {
         currentUser: {
             usedSpace: 0,
+            isActivated: false
         },
         isAuth: false,
-        isLoading: false
+        isLoading: false,
+
     },
     reducers: {
         setUser(state, action) {

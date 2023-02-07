@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import ConfirmDeleteFile from "../components/disk/СonfirmDeleteFile";
 
 const sliceFileReducer = createSlice({
     name: 'toolkit',

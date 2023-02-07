@@ -4,11 +4,9 @@ import Registration from "./components/authorization/Registration";
 import Login from "./components/authorization/Login";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
-import {auth} from "./http";
 import AuthService from "./services/AuthService";
-import {store} from "./redusers";
 import Disk from "./components/disk/Disk";
-import {toast, ToastContainer} from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import Profile from "./components/profile/Profile";
 
 import SizeBar from "./components/SizeBar";
@@ -19,6 +17,7 @@ import Hero from "./components/hero/Hero";
 
 function App() {
     const isAuth = useSelector(state => state.user.isAuth)
+    const isActivated = useSelector(state => state.user.currentUser.isActivated)
     const isLoading = useSelector(state => state.user.isLoading)
     const dispatch = useDispatch()
 
@@ -39,18 +38,19 @@ function App() {
         <BrowserRouter>
 
             <Navbar/>
-            {isAuth && <SizeBar/>}
-            {!isAuth ?
-                <Routes>
-                    <Route path="/" element={<Hero/>}/>
-                    <Route path="/registration" element={<Registration/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="*" element={<Navigate to="/" replace/>}/>
-                </Routes> :
+            {isAuth && isActivated && <SizeBar/>}
+            {isAuth && isActivated  ?
                 <Routes>
                     <Route path="/" element={<Disk/>}/>
                     <Route path="/profile" element={<Profile/>}/>
                     <Route path="*" element={<Navigate to="/" replace/>}/>
+                </Routes>
+                :
+                <Routes>
+                <Route path="/" element={<Hero/>}/>
+                <Route path="/registration" element={<Registration/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="*" element={<Navigate to="/" replace/>}/>
                 </Routes>
 
             }

@@ -2,6 +2,7 @@ import api from "../http";
 import {setLoading, setUser} from "../redusers/sliceUserReducer";
 import axios from "axios";
 import {setServerMessageLogin, setServerMessageRegister} from "../redusers/sliceAppReducer";
+import emailjs from '@emailjs/browser'
 
 const url = process.env.REACT_APP_API_HOST
 
@@ -21,6 +22,8 @@ export default class AuthService{
                     dispatch(setServerMessageRegister("The server is not working, contact the administrator to enable it and fix the error"));
                     return
                 }
+
+                this.sendActivationMail(email, `${process.env.REACT_APP_API_HOST}api/auth/activate/${response.data.user.activationLink}`)
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.accessToken)
                 dispatch(setServerMessageRegister(""));
@@ -29,6 +32,21 @@ export default class AuthService{
                 dispatch(setServerMessageRegister(e.response.data.message));
             }
         }
+    }
+    static sendActivationMail = (to, link) => {
+        console.log("sendActivationMail")
+        let templateParams = {
+            to: to,
+            link: link
+        };
+
+        console.log(to, link)
+         emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+            }, function(error) {
+                console.log('FAILED...', error);
+            });
     }
 
     static fetchUsers() {

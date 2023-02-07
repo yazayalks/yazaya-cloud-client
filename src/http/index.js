@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {setServerStatus} from "../redusers/sliceAppReducer";
 
 export const API_URl = process.env.REACT_APP_API_HOST
 const api = axios.create({
@@ -28,9 +27,9 @@ api.interceptors.response.use((config) => {
             console.log('User is not authorized')
         }
     }
-    // if (error.response  === undefined) {
-    //     return
-    // }
+    if (error.response  === undefined) {
+        return
+    }
     throw error;
 })
 
