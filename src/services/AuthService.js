@@ -1,14 +1,21 @@
 import api from "../http";
 import {setLoading, setUser} from "../redusers/sliceUserReducer";
 import axios from "axios";
-import {setServerMessageLogin, setServerMessageRegister} from "../redusers/sliceAppReducer";
+import {
+    setServerMessageConfirmRegister,
+    setServerMessageLogin,
+    setServerMessageRegister
+} from "../redusers/sliceAppReducer";
 import emailjs from '@emailjs/browser'
+import {useSelector} from "react-redux";
 
 const url = process.env.REACT_APP_API_HOST
 
 export default class AuthService{
 
     static registration = (email, password, firstName, lastName) => {
+        const isActivated = useSelector(state => state.user.currentUser.isActivated)
+        const isAuth = useSelector(state => state.user.isAuth)
         return async dispatch => {
             try {
                 const response = await api.post('api/auth/registration',
@@ -27,6 +34,9 @@ export default class AuthService{
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.accessToken)
                 dispatch(setServerMessageRegister(""));
+                if(isAuth && !isActivated) {
+                    dispatch(setServerMessageConfirmRegister("Registration successful, please verify your email"));
+                }
             } catch (e) {
                 console.log(e)
                 dispatch(setServerMessageRegister(e.response.data.message));
@@ -69,6 +79,8 @@ export default class AuthService{
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.accessToken)
                 dispatch(setServerMessageLogin(""));
+                dispatch(setServerMessageConfirmRegister(""));
+                dispatch(setServerMessageRegister(""));
             } catch (e) {
                 console.log(e)
                 dispatch(setServerMessageLogin(e.response.data.message));

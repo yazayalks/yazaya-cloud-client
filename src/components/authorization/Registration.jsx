@@ -13,6 +13,8 @@ const Registration = () => {
     const [passwordConfirm, setPasswordConfirm] = useState("")
     const dispatch = useDispatch()
     const serverMessage = useSelector(state => state.app.serverMessageRegister)
+    const serverMessageConfirmRegister = useSelector(state => state.app.serverMessageConfirmRegister)
+    const isAuth = useSelector(state => state.user.isAuth)
 
 
 
@@ -27,6 +29,7 @@ const Registration = () => {
             setError(false)
         }
         dispatch(AuthService.registration(email, password, firstName, lastName))
+
     }
 
     return (
@@ -73,6 +76,7 @@ const Registration = () => {
 
                }
                 <p style={{color: 'red'}}>{serverMessage}</p>
+                <p style={{color: 'green'}}>{serverMessageConfirmRegister}</p>
                 <div className="field is-grouped is-grouped-right">
                     <div className="control">
                         <input type="submit" className="button is-primary" value="Register"/>

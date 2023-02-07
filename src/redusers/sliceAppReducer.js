@@ -8,6 +8,7 @@ const sliceAppReducer = createSlice({
     showMenu: false,
     serverMessageRegister: '',
     serverMessageLogin: '',
+    serverMessageConfirmRegister: '',
     reducers: {
         showLoader(state) {
             state.loader = true;
@@ -24,6 +25,9 @@ const sliceAppReducer = createSlice({
         setServerMessageLogin(state, action) {
             state.serverMessageLogin = action.payload;
         },
+        setServerMessageConfirmRegister(state, action) {
+            state.serverMessageConfirmRegister = action.payload;
+        },
     },
 
 })
@@ -34,5 +38,6 @@ export const {
     hideLoader,
     showMenu,
     setServerMessageRegister,
+    setServerMessageConfirmRegister,
     setServerMessageLogin
 } = sliceAppReducer.actions
