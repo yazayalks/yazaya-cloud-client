@@ -13,11 +13,11 @@ const url = process.env.REACT_APP_API_HOST
 
 export default class AuthService{
 
-    static registration = (email, password, firstName, lastName) => {
-        const isActivated = useSelector(state => state.user.currentUser.isActivated)
-        const isAuth = useSelector(state => state.user.isAuth)
+    static registration = (email, password, firstName, lastName, clearForm) => {
+
         return async dispatch => {
             try {
+                dispatch(setServerMessageConfirmRegister(""));
                 const response = await api.post('api/auth/registration',
                     {
                         email,
@@ -25,18 +25,23 @@ export default class AuthService{
                         firstName,
                         lastName
                     })
+
                 if (response === undefined) {
                     dispatch(setServerMessageRegister("The server is not working, contact the administrator to enable it and fix the error"));
                     return
+                }
+                if (response.status === 200) {
+                    dispatch(setServerMessageConfirmRegister("Registration successful, please verify your email"));
+                    clearForm()
                 }
 
                 this.sendActivationMail(email, `${process.env.REACT_APP_API_HOST}api/auth/activate/${response.data.user.activationLink}`)
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.accessToken)
                 dispatch(setServerMessageRegister(""));
-                if(isAuth && !isActivated) {
-                    dispatch(setServerMessageConfirmRegister("Registration successful, please verify your email"));
-                }
+                dispatch(setServerMessageLogin(""));
+
+
             } catch (e) {
                 console.log(e)
                 dispatch(setServerMessageRegister(e.response.data.message));

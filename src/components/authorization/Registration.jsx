@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Input from "../utils/Input";
 import AuthService from "../../services/AuthService";
 import {registration} from "../../http";
 import {useDispatch, useSelector} from "react-redux";
+import {setServerMessageConfirmRegister} from "../../redusers/sliceAppReducer";
 
 const Registration = () => {
     const [firstName, setFirstName] = useState("")
@@ -14,8 +15,6 @@ const Registration = () => {
     const dispatch = useDispatch()
     const serverMessage = useSelector(state => state.app.serverMessageRegister)
     const serverMessageConfirmRegister = useSelector(state => state.app.serverMessageConfirmRegister)
-    const isAuth = useSelector(state => state.user.isAuth)
-
 
 
     async function handleFormSubmit(evt) {
@@ -24,12 +23,19 @@ const Registration = () => {
         if (password !== passwordConfirm) {
             setError(true)
             return
-        }
-        else {
+        } else {
             setError(false)
         }
-        dispatch(AuthService.registration(email, password, firstName, lastName))
+        dispatch(AuthService.registration(email, password, firstName, lastName, clearForm ))
 
+    }
+
+    function clearForm() {
+        setFirstName('')
+        setLastName('')
+        setEmail('')
+        setPassword('')
+        setPasswordConfirm('')
     }
 
     return (
@@ -71,10 +77,10 @@ const Registration = () => {
                                placeholder="Enter password confirm"/>
                     </div>
                 </div>
-                {error&&
+                {error &&
                     <p style={{color: 'red'}}>Passwords do not match</p>
 
-               }
+                }
                 <p style={{color: 'red'}}>{serverMessage}</p>
                 <p style={{color: 'green'}}>{serverMessageConfirmRegister}</p>
                 <div className="field is-grouped is-grouped-right">
