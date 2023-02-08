@@ -8,10 +8,6 @@ const SizeBar = () => {
     const currentUser = useSelector(state => state.user.currentUser)
     const usedSpace =  useSelector(state => state.user.currentUser.usedSpace)
     const diskSpace = currentUser.diskSpace;
-    const dispatch = useDispatch()
-
-
-
     useEffect(() => {
 
     }, [usedSpace])

@@ -7,10 +7,8 @@ import {
     setServerMessageRegister
 } from "../redusers/sliceAppReducer";
 import emailjs from '@emailjs/browser'
-import {useSelector} from "react-redux";
 
 const url = process.env.REACT_APP_API_HOST
-
 export default class AuthService{
 
     static registration = (email, password, firstName, lastName, clearForm) => {

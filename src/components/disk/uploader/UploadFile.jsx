@@ -14,7 +14,6 @@ const UploadFile = (props) => {
                 <div className="control">
                     <button className="delete" aria-label="delete" onClick={() => dispatch(removeUploadFile(props.file.id))}></button>
                 </div>
-
                 <progress className="progress is-primary progress-container" data-text= {props.file.progress + '%'}   value={props.file.progress} max="100"></progress>
 
             </div>

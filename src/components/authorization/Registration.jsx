@@ -19,7 +19,6 @@ const Registration = () => {
 
     async function handleFormSubmit(evt) {
         evt.preventDefault();
-
         if (password !== passwordConfirm) {
             setError(true)
             return

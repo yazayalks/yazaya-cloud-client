@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './confirmDeleteFile.css'
 import {useDispatch, useSelector} from "react-redux";
-import {setConfirmDeleteDir, setConfirmDeleteFile, setPopupDisplay} from "../../redusers/sliceFileReducer";
+import {setConfirmDeleteDir} from "../../redusers/sliceFileReducer";
 import FileService from "../../services/FileService";
 import Input from "../utils/Input";
 
@@ -29,9 +29,6 @@ const ConfirmDeleteDir = () => {
         setDirName('')
         dispatch(setConfirmDeleteDir('none'))
     }
-
-
-
     return (
         <div style={{display: confirmDisplay, minWidth:"300px"}} className="confirm-delete-file"
              onClick={(e) =>  backClickHandler(e)}>

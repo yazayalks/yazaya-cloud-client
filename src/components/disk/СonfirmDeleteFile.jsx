@@ -16,7 +16,6 @@ const ConfirmDeleteFile = () => {
         dispatch(setConfirmDeleteFile('none'))
     }
 
-
     return (
         <div style={{display: confirmDisplay, minWidth:"300px"}} className="confirm-delete-file"
              onClick={() => dispatch(setConfirmDeleteFile('none'))}>

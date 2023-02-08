@@ -3,15 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import FileService from "../../services/FileService";
 import FileList from "./fileList/FileList";
 import Popup from "./Popup";
-
 import WindowSharpIcon from '@mui/icons-material/WindowSharp';
 import ReorderSharpIcon from '@mui/icons-material/ReorderSharp';
-
-
 import {
     popTitle,
     popToStack,
-    pushTitle,
     setCurrentDir,
     setPopupDisplay,
     setSearchMod, setView
@@ -142,23 +138,20 @@ const Disk = () => {
                             <input className="input is-primary" value={searchName} onChange={e => setChangeHandler(e)}
                                    type="text" placeholder="Enter search"/>
                         </div>
-                        <div  className="field is-grouped is-grouped-right">
+                        <div className="field is-grouped is-grouped-right">
                             <div className="control m-2 is-primary">
 
                                 <button className="button" onClick={() => dispatch(setView('plate'))}>
-                                    <WindowSharpIcon />
+                                    <WindowSharpIcon/>
                                 </button>
                             </div>
                             <div className="control m-2 is-primary">
                                 <button className="button" onClick={() => dispatch(setView('list'))}>
-                                    <ReorderSharpIcon />
+                                    <ReorderSharpIcon/>
                                 </button>
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
 
                 {!loader ? <FileList/> : <div className="loader-container">

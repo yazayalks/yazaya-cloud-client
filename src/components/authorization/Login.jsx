@@ -13,7 +13,6 @@ const Login = () => {
 
     async function handleFormSubmit(evt) {
         evt.preventDefault();
-
         dispatch(AuthService.login(email, password))
     }
 

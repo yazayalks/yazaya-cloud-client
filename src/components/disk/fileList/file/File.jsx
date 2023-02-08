@@ -46,18 +46,9 @@ const File = (props) => {
             dispatch(setNameDirForDelete(props.file.name))
             dispatch(setIdDirForDelete(props.file._id))
             let res = dispatch(setConfirmDeleteDir('flex'))
-            if (res) {
-                console.log(res)
-            }
         }
     }
 
-    function selectDirHandler() {
-        setActive(!active)
-    }
-
-
-    // )
     if (fileView === 'list') {
         return (
 
